@@ -19,8 +19,7 @@ jobs:
         node-version: [20.x, 22.x]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -61,8 +60,11 @@ jobs:
           restore-keys: |
             turbo-${{ runner.os }}-20.x-
 
+      - name: Ensure ESLint is installed
+        run: npm install --no-save eslint
+
       - name: Run lint
-        run: npm run lint --if-present
+        run: npm run lint
 
   test:
     name: Test
